@@ -59,7 +59,7 @@ globe.controls().autoRotate = true;
 globe.controls().autoRotateSpeed = 0.3;
 globe.pointOfView({ lat: 20, lng: 0, altitude: 2.0 });
 
-fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+fetch('./data/world.geojson')
   .then(r => r.json())
   .then(geo => {
     globe
