@@ -19,19 +19,24 @@ const sample = [
   { iso:'ZAF', country:'South Africa', lat:-30, lng:24, class:'yellow', fh:79, vdem:0.67, eiu:7.05 }
 ];
 
-const colorMap = { blue:'#2d7ff9', yellow:'#f7b83a', red:'#e74c3c' };
-let selectedCountry = null;
-
+const byIso = new Map(sample.map(d => [d.iso, d]));
 const panel = document.getElementById('panel');
+
+const fillMap = {
+  blue: 'rgba(45,127,249,0.25)',
+  yellow: 'rgba(247,184,58,0.25)',
+  red: 'rgba(231,76,60,0.25)'
+};
+const strokeMap = {
+  blue: 'rgba(45,127,249,0.55)',
+  yellow: 'rgba(247,184,58,0.55)',
+  red: 'rgba(231,76,60,0.55)'
+};
+
 const globe = Globe()(document.getElementById('globe'))
   .backgroundColor('#0b0d11')
   .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
   .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-  .pointsData(sample)
-  .pointAltitude(0.03)
-  .pointRadius(0.5)
-  .pointColor(d => colorMap[d.class])
-  .pointLabel(d => `${d.country} (${d.iso})`)
   .htmlElementsData([])
   .htmlLat(d => d.lat)
   .htmlLng(d => d.lng)
@@ -48,20 +53,67 @@ const globe = Globe()(document.getElementById('globe'))
     `;
     return el;
   })
-  .onPointClick(d => {
-    selectedCountry = d;
-    globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.3 }, 900);
-    globe.htmlElementsData([d]);
-    renderPanel(d);
-  })
-  .onGlobeClick(() => {
-    selectedCountry = null;
-    globe.htmlElementsData([]);
-  });
+  .onGlobeClick(() => globe.htmlElementsData([]));
 
 globe.controls().autoRotate = true;
-globe.controls().autoRotateSpeed = 0.35;
-globe.pointOfView({ lat: 20, lng: 0, altitude: 2.1 });
+globe.controls().autoRotateSpeed = 0.3;
+globe.pointOfView({ lat: 20, lng: 0, altitude: 2.0 });
+
+fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+  .then(r => r.json())
+  .then(geo => {
+    globe
+      .polygonsData(geo.features)
+      .polygonAltitude(feat => getCountry(feat) ? 0.006 : 0.001)
+      .polygonCapColor(feat => {
+        const c = getCountry(feat);
+        return c ? fillMap[c.class] : 'rgba(255,255,255,0.03)';
+      })
+      .polygonSideColor(() => 'rgba(0,0,0,0.05)')
+      .polygonStrokeColor(feat => {
+        const c = getCountry(feat);
+        return c ? strokeMap[c.class] : 'rgba(255,255,255,0.08)';
+      })
+      .polygonLabel(feat => {
+        const c = getCountry(feat);
+        if (!c) return feat.properties.name;
+        return `${c.country}<br/>${labelFor(c.class)}`;
+      })
+      .onPolygonClick(feat => {
+        const c = getCountry(feat);
+        if (!c) return;
+        const center = featureCenter(feat) || { lat: c.lat, lng: c.lng };
+        globe.pointOfView({ lat: center.lat, lng: center.lng, altitude: 1.3 }, 900);
+        globe.htmlElementsData([{ ...c, lat: center.lat, lng: center.lng }]);
+        renderPanel(c);
+      });
+  })
+  .catch(() => {
+    panel.innerHTML = '<h2>Data load issue</h2><p>Could not load country polygons right now.</p>';
+  });
+
+function getCountry(feature) {
+  const p = feature.properties || {};
+  const iso = (p.iso_a3 || p.ISO_A3 || p.adm0_a3 || '').toUpperCase();
+  if (iso && byIso.has(iso)) return byIso.get(iso);
+  const name = (p.name || p.ADMIN || '').toLowerCase();
+  return sample.find(s => s.country.toLowerCase() === name);
+}
+
+function featureCenter(feature) {
+  try {
+    const coords = feature.geometry.coordinates;
+    let ring = null;
+    if (feature.geometry.type === 'Polygon') ring = coords[0];
+    if (feature.geometry.type === 'MultiPolygon') ring = coords[0][0];
+    if (!ring || !ring.length) return null;
+    let lat = 0, lng = 0;
+    ring.forEach(([x, y]) => { lng += x; lat += y; });
+    return { lat: lat / ring.length, lng: lng / ring.length };
+  } catch {
+    return null;
+  }
+}
 
 function renderPanel(d) {
   panel.innerHTML = `
@@ -72,7 +124,7 @@ function renderPanel(d) {
       <div class="row"><span>V-Dem (norm.)</span><strong>${d.vdem.toFixed(2)}</strong></div>
       <div class="row"><span>EIU Democracy</span><strong>${d.eiu.toFixed(2)}</strong></div>
     </div>
-    <p class="meta">Pilot data only. Full build will include full-country coverage, timeseries, methodology overlays, and citation links per indicator.</p>
+    <p class="meta">Pilot data only. Full build will include all countries, time series, and source citations.</p>
   `;
 }
 
