@@ -14,15 +14,23 @@
       <span><i class="dot blue"></i> Democracy</span>
       <span><i class="dot yellow"></i> Hybrid</span>
       <span><i class="dot red"></i> Authoritarian</span>
+      <span><i class="dot no_data"></i> No data</span>
     </div>
   </header>
 
   <main>
     <section id="globe"></section>
-    <aside id="panel">
-      <h2>Select a country</h2>
-      <p>Click a highlighted country marker on the globe.</p>
-      <div class="meta">Data sources: Freedom House, V-Dem, EIU (pilot sample)</div>
+    <aside id="panel-wrap">
+      <div class="search-box">
+        <input id="country-search" type="text" placeholder="Search country..." autocomplete="off" />
+        <ul id="search-suggestions" class="suggestions"></ul>
+        <div id="search-status" class="search-status"></div>
+      </div>
+      <aside id="panel">
+        <h2>Select a country</h2>
+        <p>Type a country name or click a country on the globe.</p>
+        <div class="meta">Data sources: Freedom House, V-Dem, EIU (pilot sample)</div>
+      </aside>
     </aside>
   </main>
 
@@ -30,6 +38,8 @@
     Pilot scope: 18-country sample • UX concept validation only
   </footer>
 
+  <script src="data/regime-data.js"></script>
+  <script src="data/search.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

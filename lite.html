@@ -18,14 +18,22 @@
       <span><i class="dot blue"></i> Democracy</span>
       <span><i class="dot yellow"></i> Hybrid</span>
       <span><i class="dot red"></i> Authoritarian</span>
+      <span><i class="dot no_data"></i> No data</span>
     </div>
   </header>
   <main style="display:block">
+    <div class="search-box lite-search">
+      <input id="country-search-lite" type="text" placeholder="Search country..." autocomplete="off" />
+      <ul id="search-suggestions-lite" class="suggestions"></ul>
+      <div id="search-status-lite" class="search-status"></div>
+    </div>
     <section id="map2d"></section>
   </main>
   <footer>Fallback mode (2D) • Same pilot data, no WebGL required</footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data/regime-data.js"></script>
+  <script src="data/search.js"></script>
   <script src="lite.js"></script>
 </body>
 </html>
