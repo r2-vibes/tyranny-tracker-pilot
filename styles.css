@@ -21,9 +21,18 @@ header {
 .yellow { background: #f7b83a; }
 .red { background: #e74c3c; }
 .no_data { background: #8c92a0; }
-main { display: grid; grid-template-columns: 1fr 340px; min-height: calc(100vh - 110px); }
-#globe { min-height: 620px; }
+main {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  grid-template-areas: "globe panel";
+  min-height: calc(100vh - 110px);
+}
+#globe {
+  grid-area: globe;
+  min-height: 620px;
+}
 #panel-wrap {
+  grid-area: panel;
   border-left: 1px solid #232733;
   background: #10141c;
 }
@@ -103,6 +112,11 @@ footer {
 .country-bubble.no_data { border-color: #8c92a0; }
 
 @media (max-width: 980px) {
-  main { grid-template-columns: 1fr; }
+  main {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "panel"
+      "globe";
+  }
   #panel-wrap { border-left: 0; border-top: 1px solid #232733; }
 }
