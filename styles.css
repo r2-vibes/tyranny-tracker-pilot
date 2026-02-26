@@ -21,11 +21,14 @@ header {
 .yellow { background: #f7b83a; }
 .red { background: #e74c3c; }
 .no_data { background: #8c92a0; }
+.search-float { padding: 10px 14px 0; background: #0f1218; border-bottom: 1px solid #232733; }
+.search-float .search-box { max-width: 420px; border: 1px solid #232733; border-radius: 12px; }
+
 main {
   display: grid;
   grid-template-columns: 1fr 340px;
   grid-template-areas: "globe panel";
-  min-height: calc(100vh - 110px);
+  min-height: calc(100vh - 172px);
 }
 #globe {
   grid-area: globe;
@@ -117,6 +120,9 @@ footer {
     grid-template-areas:
       "panel"
       "globe";
+    min-height: calc(100vh - 210px);
   }
+  .search-float { padding: 8px 10px 0; }
+  .search-float .search-box { max-width: 100%; }
   #panel-wrap { border-left: 0; border-top: 1px solid #232733; }
 }

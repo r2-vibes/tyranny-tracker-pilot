@@ -67,17 +67,17 @@ fetch('./data/world.geojson')
       .polygonsData(geo.features)
       .polygonAltitude(feat => {
         const d = byIso.get(getFeatureIso(feat)) || resolveCountryRegime(feat);
-        return d.sourceStatus === 'missing' ? 0.006 : 0.014;
+        return d.sourceStatus === 'missing' ? 0 : 0.014;
       })
       .polygonCapColor(feat => {
         const d = byIso.get(getFeatureIso(feat)) || resolveCountryRegime(feat);
-        if (d.regimeClass === 'no_data') return 'rgba(140,146,160,0.28)';
+        if (d.regimeClass === 'no_data') return 'rgba(0,0,0,0)';
         return REGIME_COLORS[d.regimeClass].fill;
       })
       .polygonSideColor(() => 'rgba(0,0,0,0)')
       .polygonStrokeColor(feat => {
         const d = byIso.get(getFeatureIso(feat)) || resolveCountryRegime(feat);
-        if (d.regimeClass === 'no_data') return 'rgba(140,146,160,0.45)';
+        if (d.regimeClass === 'no_data') return 'rgba(0,0,0,0)';
         return REGIME_COLORS[d.regimeClass].stroke;
       })
       .polygonLabel(feat => {
