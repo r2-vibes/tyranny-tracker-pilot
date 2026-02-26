@@ -42,6 +42,26 @@ footer {
   color: #93a0b5;
   font-size: 12px;
 }
+
+.country-bubble {
+  width: 180px;
+  border-radius: 12px;
+  border: 1px solid #2c3343;
+  background: rgba(14,18,26,.95);
+  backdrop-filter: blur(4px);
+  color: #e8edf7;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  transform: translate(-50%, -110%);
+  pointer-events: none;
+}
+.country-bubble .bubble-title { font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+.country-bubble .bubble-badge { font-size: 11px; opacity: .9; margin-bottom: 6px; }
+.country-bubble .bubble-row { display:flex; justify-content:space-between; font-size:12px; margin:2px 0; }
+.country-bubble.blue { border-color: #2d7ff9; }
+.country-bubble.yellow { border-color: #f7b83a; }
+.country-bubble.red { border-color: #e74c3c; }
+
 @media (max-width: 980px) {
   main { grid-template-columns: 1fr; }
   #panel { border-left: 0; border-top: 1px solid #232733; }

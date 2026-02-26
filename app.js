@@ -20,6 +20,7 @@ const sample = [
 ];
 
 const colorMap = { blue:'#2d7ff9', yellow:'#f7b83a', red:'#e74c3c' };
+let selectedCountry = null;
 
 const panel = document.getElementById('panel');
 const globe = Globe()(document.getElementById('globe'))
@@ -31,14 +32,35 @@ const globe = Globe()(document.getElementById('globe'))
   .pointRadius(0.5)
   .pointColor(d => colorMap[d.class])
   .pointLabel(d => `${d.country} (${d.iso})`)
+  .htmlElementsData([])
+  .htmlLat(d => d.lat)
+  .htmlLng(d => d.lng)
+  .htmlAltitude(0.07)
+  .htmlElement(d => {
+    const el = document.createElement('div');
+    el.className = `country-bubble ${d.class}`;
+    el.innerHTML = `
+      <div class="bubble-title">${d.country}</div>
+      <div class="bubble-badge">${labelFor(d.class)}</div>
+      <div class="bubble-row"><span>FH</span><strong>${d.fh}</strong></div>
+      <div class="bubble-row"><span>V-Dem</span><strong>${d.vdem.toFixed(2)}</strong></div>
+      <div class="bubble-row"><span>EIU</span><strong>${d.eiu.toFixed(2)}</strong></div>
+    `;
+    return el;
+  })
   .onPointClick(d => {
+    selectedCountry = d;
     globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.3 }, 900);
+    globe.htmlElementsData([d]);
     renderPanel(d);
+  })
+  .onGlobeClick(() => {
+    selectedCountry = null;
+    globe.htmlElementsData([]);
   });
 
 globe.controls().autoRotate = true;
 globe.controls().autoRotateSpeed = 0.35;
-
 globe.pointOfView({ lat: 20, lng: 0, altitude: 2.1 });
 
 function renderPanel(d) {
