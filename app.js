@@ -23,9 +23,9 @@ const byIso = new Map(sample.map(d => [d.iso, d]));
 const panel = document.getElementById('panel');
 
 const fillMap = {
-  blue: 'rgba(45,127,249,0.25)',
-  yellow: 'rgba(247,184,58,0.25)',
-  red: 'rgba(231,76,60,0.25)'
+  blue: 'rgba(45,127,249,0.42)',
+  yellow: 'rgba(247,184,58,0.42)',
+  red: 'rgba(231,76,60,0.42)'
 };
 const strokeMap = {
   blue: 'rgba(45,127,249,0.55)',
@@ -35,8 +35,8 @@ const strokeMap = {
 
 const globe = Globe()(document.getElementById('globe'))
   .backgroundColor('#0b0d11')
-  .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
-  .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+  .globeImageUrl('./assets/earth-dark.jpg')
+  .bumpImageUrl('./assets/earth-topology.png')
   .htmlElementsData([])
   .htmlLat(d => d.lat)
   .htmlLng(d => d.lng)
@@ -57,14 +57,14 @@ const globe = Globe()(document.getElementById('globe'))
 
 globe.controls().autoRotate = true;
 globe.controls().autoRotateSpeed = 0.3;
-globe.pointOfView({ lat: 20, lng: 0, altitude: 2.0 });
+globe.pointOfView({ lat: 20, lng: 0, altitude: 1.85 });
 
 fetch('./data/world.geojson')
   .then(r => r.json())
   .then(geo => {
     globe
       .polygonsData(geo.features)
-      .polygonAltitude(feat => getCountry(feat) ? 0.006 : 0.001)
+      .polygonAltitude(feat => getCountry(feat) ? 0.012 : 0.001)
       .polygonCapColor(feat => {
         const c = getCountry(feat);
         return c ? fillMap[c.class] : 'rgba(255,255,255,0.03)';
