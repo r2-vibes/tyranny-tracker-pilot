@@ -47,10 +47,11 @@ const globe = Globe()(document.getElementById('globe'))
     `;
     return el;
   })
-  .onGlobeClick(() => globe.htmlElementsData([]));
+  .onGlobeClick(() => globe.htmlElementsData([]))
+  .polygonsTransitionDuration(0);
 
-globe.controls().autoRotate = true;
-globe.controls().autoRotateSpeed = 0.25;
+globe.controls().autoRotate = false;
+globe.controls().autoRotateSpeed = 0;
 globe.pointOfView({ lat: 20, lng: 0, altitude: 1.85 });
 
 fetch('./data/world.geojson')
