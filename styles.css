@@ -13,7 +13,8 @@ header {
   border-bottom: 1px solid #232733;
   background: #0f1218;
 }
-.logo { font-weight: 800; letter-spacing: .04em; }
+.logo { font-weight: 800; letter-spacing: .04em; display:flex; align-items:center; gap:10px; }
+.logo-mark { width: 28px; height: 28px; flex: 0 0 auto; }
 .logo span { color: #f7b83a; font-weight: 600; }
 .legend { display: flex; gap: 16px; font-size: 13px; color: #c4cad6; }
 .dot { width: 10px; height: 10px; border-radius: 999px; display: inline-block; margin-right: 6px; }
