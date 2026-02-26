@@ -25,20 +25,14 @@ header {
 .search-float .search-box { max-width: 420px; border: 1px solid #232733; border-radius: 12px; }
 
 main {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  grid-template-areas: "globe panel";
+  display: block;
   min-height: calc(100vh - 172px);
 }
 #globe {
   grid-area: globe;
   min-height: 620px;
 }
-#panel-wrap {
-  grid-area: panel;
-  border-left: 1px solid #232733;
-  background: #10141c;
-}
+#panel-wrap { display:none; }
 #panel {
   padding: 18px;
 }
@@ -116,10 +110,6 @@ footer {
 
 @media (max-width: 980px) {
   main {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "panel"
-      "globe";
     min-height: calc(100vh - 210px);
   }
   .search-float { padding: 8px 10px 0; }

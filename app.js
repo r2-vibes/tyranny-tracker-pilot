@@ -100,6 +100,7 @@ function focusCountry(d) {
   globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.3 }, 900);
   globe.htmlElementsData([{ ...d }]);
   searchInput.value = d.country;
+  searchInput.dataset.selectedName = d.country;
   suggestions = [];
   activeSuggestion = -1;
   suggestionsEl.innerHTML = "";
@@ -107,6 +108,7 @@ function focusCountry(d) {
 }
 
 function renderPanel(d) {
+  if (!panel) return;
   if (d.sourceStatus === 'missing') {
     panel.innerHTML = `
       <h2>${d.country}</h2>
