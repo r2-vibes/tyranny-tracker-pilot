@@ -31,6 +31,8 @@ const globe = Globe()(document.getElementById('globe'))
   .htmlElement(d => {
     const el = document.createElement('div');
     el.className = `country-bubble ${d.regimeClass}`;
+    // Prevent right-edge clipping: shift bubbles left for eastern longitudes.
+    el.style.transform = (d.lng > 20) ? 'translate(-105%, -110%)' : 'translate(-50%, -110%)';
     if (d.sourceStatus === 'missing') {
       el.innerHTML = `
         <div class="bubble-title">${d.country}</div>
