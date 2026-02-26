@@ -1,3 +1,12 @@
+
+(function(){
+  try {
+    const c=document.createElement('canvas');
+    const ok=!!(window.WebGLRenderingContext && (c.getContext('webgl')||c.getContext('experimental-webgl')));
+    if(!ok){ window.location.href='./lite.html'; return; }
+  } catch(e){ window.location.href='./lite.html'; return; }
+})();
+
 const sample = [
   { iso:'USA', country:'United States', lat:38, lng:-97, class:'blue', fh:83, vdem:0.83, eiu:7.85 },
   { iso:'CAN', country:'Canada', lat:56, lng:-106, class:'blue', fh:97, vdem:0.9, eiu:8.69 },
@@ -133,3 +142,8 @@ function labelFor(v){
   if(v==='yellow') return 'Hybrid';
   return 'Authoritarian';
 }
+
+setTimeout(() => {
+  const cv = document.querySelector('#globe canvas');
+  if (!cv || cv.clientWidth === 0 || cv.clientHeight === 0) window.location.href = './lite.html';
+}, 2500);

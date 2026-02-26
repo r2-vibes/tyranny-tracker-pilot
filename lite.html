@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tyranny Tracker — Lite Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    #map2d { height: calc(100vh - 110px); }
+    .leaflet-container { background: #111722; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">◉ TYRANNY TRACKER <span>LITE</span></div>
+    <div class="legend">
+      <span><i class="dot blue"></i> Democracy</span>
+      <span><i class="dot yellow"></i> Hybrid</span>
+      <span><i class="dot red"></i> Authoritarian</span>
+    </div>
+  </header>
+  <main style="display:block">
+    <section id="map2d"></section>
+  </main>
+  <footer>Fallback mode (2D) • Same pilot data, no WebGL required</footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="lite.js"></script>
+</body>
+</html>
