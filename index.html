@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tyranny Tracker — Pilot</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+  <header>
+    <div class="logo">◉ TYRANNY TRACKER <span>PILOT</span></div>
+    <div class="legend">
+      <span><i class="dot blue"></i> Democracy</span>
+      <span><i class="dot yellow"></i> Hybrid</span>
+      <span><i class="dot red"></i> Authoritarian</span>
+    </div>
+  </header>
+
+  <main>
+    <section id="globe"></section>
+    <aside id="panel">
+      <h2>Select a country</h2>
+      <p>Click a highlighted country marker on the globe.</p>
+      <div class="meta">Data sources: Freedom House, V-Dem, EIU (pilot sample)</div>
+    </aside>
+  </main>
+
+  <footer>
+    Pilot scope: 18-country sample • UX concept validation only
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
