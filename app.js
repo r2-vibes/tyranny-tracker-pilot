@@ -23,9 +23,9 @@ const byIso = new Map(sample.map(d => [d.iso, d]));
 const panel = document.getElementById('panel');
 
 const fillMap = {
-  blue: 'rgba(45,127,249,0.42)',
-  yellow: 'rgba(247,184,58,0.42)',
-  red: 'rgba(231,76,60,0.42)'
+  blue: 'rgba(45,127,249,0.58)',
+  yellow: 'rgba(247,184,58,0.58)',
+  red: 'rgba(231,76,60,0.58)'
 };
 const strokeMap = {
   blue: 'rgba(45,127,249,0.55)',
@@ -34,8 +34,8 @@ const strokeMap = {
 };
 
 const globe = Globe()(document.getElementById('globe'))
-  .backgroundColor('#0b0d11')
-  .globeImageUrl('./assets/earth-dark.jpg')
+  .backgroundColor('#111722')
+  .globeImageUrl('./assets/earth-blue-marble.jpg')
   .bumpImageUrl('./assets/earth-topology.png')
   .htmlElementsData([])
   .htmlLat(d => d.lat)
@@ -56,7 +56,7 @@ const globe = Globe()(document.getElementById('globe'))
   .onGlobeClick(() => globe.htmlElementsData([]));
 
 globe.controls().autoRotate = true;
-globe.controls().autoRotateSpeed = 0.3;
+globe.controls().autoRotateSpeed = 0.25;
 globe.pointOfView({ lat: 20, lng: 0, altitude: 1.85 });
 
 fetch('./data/world.geojson')
