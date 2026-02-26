@@ -99,9 +99,11 @@ function focusCountry(d) {
   if (!d) return;
   globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.3 }, 900);
   globe.htmlElementsData([{ ...d }]);
-  renderPanel(d);
   searchInput.value = d.country;
-  clearSuggestions();
+  suggestions = [];
+  activeSuggestion = -1;
+  suggestionsEl.innerHTML = "";
+  searchStatus.textContent = "";
 }
 
 function renderPanel(d) {
@@ -175,7 +177,8 @@ function selectSuggestion(iso) {
 function clearSuggestions() {
   suggestions = [];
   activeSuggestion = -1;
-  renderSuggestions();
+  suggestionsEl.innerHTML = "";
+  searchStatus.textContent = "";
 }
 
 function renderSuggestions() {
